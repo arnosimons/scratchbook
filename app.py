@@ -17,7 +17,7 @@ from globals import FORMULA_SYMBOLS
 
 PATH = ""
 
-with open(f'{PATH}resources/json/combined.json', 'r') as file:
+with open(f'{PATH}resources/json/COMBINED.json', 'r') as file:
     COMBINED = json.load(file)
 
 with open(f'{PATH}resources/json/codebook.json', 'r') as file:
