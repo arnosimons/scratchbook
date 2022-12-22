@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <!-- JQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous">
+    </script>
+    <!-- Datatables -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+    <!-- Ajax -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css">
+    <!-- Custom stuff -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scratchbook.css') }}"> 
+    <script src="{{url_for('static', filename='js/scratchbook.js')}}"></script>
+    <title>ScratchBook</title>
+  </head>
+  <body> 
+    <header class="" style="background-color:rgb(33, 37, 41);box-shadow:0px 4px 3px -1px var(--grey-dark)">
+      <div class="container-md p-2 mb-3 bg-dark text-white">
+        <h1>ScratchBook &#128221;&#127926;</h1>
+        <p class="fst-italic" style="color: white; font-size: 16px;">Nerd heaven for turntablists!</p>
+        <!-- <p style="color: white; font-size: 16px;">Browse, Compose, Visualize, Listen</p> -->
+      </div>
+    </header>
+    <div class="container-md">
+      <!-- <h1>ScratchBook</h1>
+      <div id="TEST"></div> -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button name="home_button" class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button name="theory_button" class="nav-link" id="theory-tab" data-bs-toggle="tab" data-bs-target="#theory-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Theory</button>
+        </li>
+        <!-- <li class="nav-item" role="presentation">
+          <button name="about_button" class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">About</button>
+        </li> -->
+        <li class="nav-item" role="presentation">
+          <button name="impressum_button" class="nav-link" id="impressum-tab" data-bs-toggle="tab" data-bs-target="#impressum-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Impressum</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <!-- Home Tab -->
+        <div class="home tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+          <nav class="home-formula navbar md-white mt-3 mb-3">
+            <form class="home-formula__form container-fluid">
+              <div class="input-group">
+                <button class="btn btn-outline-secondary" type="submit">&#128298;</button>
+                <input 
+                  type="text" 
+                  class="home-formula__input form-control" 
+                  id="formulaInput"
+                  value=""
+                  placeholder="Write a scratch formula and press enter..">
+                <button 
+                  id="formulaButton" 
+                  class="home-formula__button btn btn-outline-secondary text-dark" 
+                  type="submit">
+                    Enter
+                </button>
+              </div>
+            </form>
+          </nav>
+          <div class="home-scratch container text-center">
+            <div class="home-scratch__message"></div>
+            <div class="home-scratch__ttm row-sm"></div>
+            <div class="home-scratch__audio row-sm"></div>
+            <div class="home-scratch__info row justify-content-center mt-3"></div>            
+          </div>
+          <!-- Library -->
+          <div class="container">
+            <div class="card border mb-3" style="min-width: 9rem;">
+              <div class="card-header">
+                <a 
+                  class="btn cardHeader" 
+                  data-bs-toggle="collapse" 
+                  aria-expanded="false"
+                  href="#libraryButton" 
+                  style="width: 100%">
+                  &#128218; Library of Scratches
+                </a>
+              </div>
+              <div id="libraryButton" class="collapse show">
+                <div class="card-body">
+                  <div id="PRINT"></div>
+                  <div class="container">
+                    <div class="row mt-2">
+                      <div class="col-lg-1">
+                        Types:
+                      </div>
+                      <div class="col-10">
+                        <div class="form-check form-switch form-check-inline">
+                          <input class="form-check-input" type="checkbox" role="switch" id="CORE" checked>
+                          <label class="form-check-label" for="CORE">Core</label>
+                        </div>
+                        <div class="form-check form-switch form-check-inline">
+                          <input class="form-check-input" type="checkbox" role="switch" id="ELEMENTS">
+                          <label class="form-check-label" for="ELEMENTS">Elements</label>
+                        </div>
+                        <div class="form-check form-switch form-check-inline">
+                          <input class="form-check-input" type="checkbox" role="switch" id="TEARS">
+                          <label class="form-check-label" for="TEARS">Tears</label>
+                        </div>
+                        <div class="form-check form-switch form-check-inline">
+                          <input class="form-check-input" type="checkbox" role="switch" id="ORBITS">
+                          <label class="form-check-label" for="ORBITS">Orbits</label>
+                        </div>
+                        <div class="form-check form-switch form-check-inline">
+                          <input class="form-check-input" type="checkbox" role="switch" id="COMBOS">
+                          <label class="form-check-label" for="COMBOS">Combos</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container mt-2">
+                    <table id="library"></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Explainer: Scratch Formulas -->
+          <div class="container fw-light">
+            <div class="card border mb-3" style="min-width: 9rem;">
+              <div class="card-header">
+                <a 
+                  class="btn cardHeader" 
+                  data-bs-toggle="collapse" 
+                  aria-expanded="false"
+                  href="#explainer" 
+                  style="width: 100%">
+                  &#129514; Explainer: Scratch Formulas
+                </a>
+              </div>
+              <div id="explainer" class="collapse">
+                <div class="card-body">
+                  <p>
+                    Think of ScratchBook's <strong>formulas</strong> as a special <strong>language</strong> that allows you to formulate <strong>all conceivable scratches</strong>.
+                  </p>
+                  <p>
+                    A <strong>formula</strong> must always include  at least one <strong>name</strong>. In addition, it can (but doesn't have to) include <strong>operators</strong>.
+                  </p>
+                  <p>
+                    Many, but not all, scratches have <strong>names</strong>. Browse the <strong>library of scratches</strong> above to see what names are available.
+                    As you will see, some scratches have <strong>multiple names</strong>. For example, the 1-click-flare-orbit has four: <code>flareorbit1</code>, <code>flob1</code>, <code>f1o</code> as well as <code>f1_f1</code>. Pick the name that resonates best with you!
+                  </p>
+                  <p> 
+                    The <strong>operators</strong> are special symbols that can be used to modify and combine names. 
+                    For example, the 1-click-flare-orbit can be repeated like so: <code>flob1 * 2</code>. Or it can be shortened like so: <code>flob1 / 0.5</code>. 
+                    See the <strong>Operators section</strong> below for more details.
+                  </p>
+                  <p> 
+                    Note that ScratchBook's <strong>formulas work on two levels</strong>.
+                    At the <strong>first level</strong>, you can combine <strong>names</strong> and <strong>operators</strong> into formulas like <code>autobahn + prizm + (slice / 0.25) * 4</code>.
+                    At the <strong>second level</strong>, ScratchBook provides <strong>special dialects</strong> to define <strong>elements</strong>, <strong>tears</strong>, and <strong>orbits</strong>.
+                    See the three <strong>Dialects sections</strong> below as well as the <strong>Theory tab</strong> on top for more details.
+                  </p>
+                  
+                </div>
+                <div class="container m-2">
+                  <h4><a id="operatorsButton" class="theory-headers" data-bs-toggle="collapse" href="#operators"  aria-expanded="false" aria-controls="operators">
+                    Operators
+                  </a></h4>
+                  <div class="collapse m-2" id="operators">
+                    <table class="table" id="OperatorTable">
+                      <thead>
+                        <tr>
+                            <th>Operator</th>
+                            <th>Purpose</th>
+                            <th>Grammar</th>
+                            <th>Example</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td>"Reverse" or "backwards" scratching (Flip a scratch on the y-axis)</td>
+                            <td>-scratch</td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='-autobahn'; formulaButton.click();">
+                              -autobahn
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>~</td>
+                            <td>"Mirror" scratching (Flip a scratch on the x-axis)</td>
+                            <td>~scratch</td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='~autobahn'; formulaButton.click();">
+                              ~autobahn
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>*</td>
+                            <td>Repeat a scratch <em>n</em> times (<em>n</em> must be an integer number)</td>
+                            <td>scratch * <em>n</em></td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='chirp * 4'; formulaButton.click();">
+                              chirp * 4
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>+</td>
+                            <td>Add scratches from left to right</td>
+                            <td>scratch + scratch</td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='chirp + flob2 + stab'; formulaButton.click();">
+                              chirp + flob2 + stab
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>/</td>
+                            <td>Set the length <em>n</em> of a scratch in 1/4 notes (aka beats)</td>
+                            <td>scratch / <em>n</em></td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='baby / 2'; formulaButton.click();">
+                              baby / 2
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>//</td>
+                            <td>Decide how much of the sample is used (<em>n</em> must be between 0 and 1)</td>
+                            <td>scratch // <em>n</em></td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='swingflare // 0.2'; formulaButton.click();">
+                              swingflare // 0.2
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>**</td>
+                            <td>Move a scratch or expression up on the Y-axis. Typically used in connection with the "//" Operator". Use brackets wisely! For example, "chirp // 0.5 ** 0.5" is not the same as "(chirp // 0.5) ** 0.5".</td>
+                            <td>expression ** <em>n</em></td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='(chirp // 0.5) ** 0.5'; formulaButton.click();">
+                              (chirp // 0.5) ** 0.5
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>%</td>
+                            <td>Shift the "phase" of a scratch by rotating its elements from right to left. (<em>n</em> must be an integer number)</td>
+                            <td>scratch % <em>n</em></td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='prizm % 2'; formulaButton.click();">
+                              prizm % 2
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>[<em>n</em>]</td>
+                            <td>Show the <em>n</em>-ths element of a composed scratch (<em>n</em> must be an integer number. <span style="color: var(--red)">&#9888;</span> Counting starts at 0 not at 1!)</td>
+                            <td>scratch[<em>n</em>]</td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='autobahn[3]'; formulaButton.click();">
+                              autobahn[3]
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>[<em>n</em>:<em>m</em>]</td>
+                            <td>Show all elements between the <em>n</em>-ths (included) and <em>m</em>-ths (excluded) element of a composed scratch (<em>n</em> and <em>m</em> must be integer numbers. <span style="color: var(--red)">&#9888;</span> Counting starts at 0 not at 1!)</td>
+                            <td>scratch[<em>n</em>:<em>m</em>]</td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='autobahn[3:7]'; formulaButton.click();">
+                              autobahn[3:7]
+                            </code></td>
+                        </tr>
+                        <tr>
+                            <td>(<em>expression</em>)</td>
+                            <td>Use (nested) brackets to logically "shield off" expressions from each other. For example, "chirp / 1/3" is not the same as "chirp / (1/3)". Brackets are essential for many complex expressions.</td>
+                            <td>(<em>expression</em>)</td>
+                            <td><code class="tooltip-code" 
+                              onclick="document.getElementById('formulaInput').value='(chirp // (1/3)) ** (2/3)'; formulaButton.click();">
+                              (chirp // (1/3)) ** (2/3)
+                            </code></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="container m-2">
+                  <h4><a id="dialectElementsButton" class="theory-headers" data-bs-toggle="collapse" href="#dialectElements"  aria-expanded="false" aria-controls="dialectElements">
+                    Dialect for Elements
+                  </a></h4>
+                  <div class="collapse m-2" id="dialectElements">
+                    <p>
+                      <strong>Elements</strong> are scratches that cannot be broken down into smaller scratches, only into their "subatomic features" (see the Theory section below). Their names obey the <strong>grammar</strong> <code>[BASE][N]*[CP]*[CRV]*</code>, whereby
+                    </p>
+                    <ul>
+                      <li><code>[BASE]</code> is obligatory and stands for one of the eleven <strong>base names</strong>: <code>baby, in, out, dice, flare, iflare, oflare, transformer, ghost, hold, ghosthold</code>. 
+                        <br/>&#128123; If you're lazy, like me, simply use <strong>abbreviations</strong>: <code>b, i, o, d, f, if, of, tr, g, h, gh</code>.</li>
+                      <li><code>[N]*</code> is only possible but then also obligatory after the bases <code>f, if, of</code>, where it stands for the number of <strong>flare-clicks</strong>, as well as after the base <code>tr</code>, where it stands for the number of <strong>transformer sounds</strong>. Currently, all numbers between <code>1</code> and <code>9</code> are permitted.</li>
+                      <li><code>[CP]*</code> is optional and stands for a non-standard <strong>click-pattern</strong> (<code>D, A, S</code> or <code>Q</code>) after any of the bases <code>f, if, of, tr</code>.</li>
+                      <li><code>[CRV]*</code> is optional and stands for a non-standard <strong>curve shape</strong> (<code>Ex</code> or <code>Log</code>) after all bases except <code>g, h, gh</code>.</li>
+                    </ul>
+                    <p>
+                      <strong>Examples</strong> for elements following this grammar are:
+                    </p>
+                    <ul>
+                      <li>
+                        <code>babyLog</code> (a baby with a logarithmic curve)
+                      </li>
+                      <li>
+                        <code>f8Q</code> (an 8-click flare with a squeezed click-pattern)
+                      </li>
+                      <li>
+                        <code>tr2AEx</code> (a 2-sound transformer with an augmented click-pattern and an exponential curve)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="container m-2">
+                  <h4><a id="dialectTearsButton" class="theory-headers" data-bs-toggle="collapse" href="#dialectTears"  aria-expanded="false" aria-controls="dialectTears">
+                    Dialect for Tears
+                  </a></h4>
+                  <div class="collapse m-2" id="dialectTears">
+                    <p>
+                      <strong>Tears</strong> are sequences of upwards or downwards oriented elements, forming cascades. Their names obey the <strong>grammar</strong> <code>[TBASE]*tear[N][CRV]*[__EL]*</code>, whereby
+                    </p>
+                    <ul>
+                      <li><code>[TBASE]</code> is optional and stands for one of the following <strong>tear-bases</strong>: <code>i, o, d, f, if, of, tr</code>. The <strong>purpose</strong> of the tear-base is to specify <strong>if and where clicks are added</strong> when the record is paused, i.e. <strong>during the tearing moments</strong>:
+                        <br/><code>i</code> = click at the start, 
+                        <br/><code>o</code> = click at the end, 
+                        <br/><code>d</code> = click at the start AND click at the end, 
+                        <br/><code>f</code> = clicks at every tearing moment, 
+                        <br/><code>if</code> = click at the start AND clicks at every tearing moment, 
+                        <br/><code>of</code> = clicks at every tearing moment AND click at the end, 
+                        <br/><code>tr</code> = click at the start AND clicks at every tearing moment AND click at the end.</li>
+                      <li><code>tear</code> is obligatory but <strong>can be abbreviated</strong> as <code>t</code>.</li>
+                      <li><code>[N]</code> is obligatory and stands for the number of pauses or <strong>tearing moments</strong>, i.e. how often the record is held still during a tear scratch.</li>
+                      <li><code>[CRV]*</code> is optional and stands for a non-standard <strong>curve shape</strong> (<code>Ex</code> or <code>Log</code>).</li>
+                      <li><code>[__EL]*</code> is optional and stands for <strong>a specific element</strong> being used during the tear scratch. <u>This function is only useful for tears and transformers</u>, and only their base names are allowed, e.g. <code>__f3</code> or <code>__tr2</code>, but not <code>__f3D</code> or <code>tr2Log</code>. Note that you must use <u>two underscores</u> to specify the tear element (otherwise you're falsely using the orbit dialect, see the tab below).</li>
+                    </ul>
+                    <p>
+                      <strong>Examples</strong> for tears following this grammar are:
+                    </p>
+                    <ul>
+                      <li>
+                        <code>tear5</code> (a 5-tear without any clicks)
+                      </li>
+                      <li>
+                        <code>it2</code> (a 2-tear with a click at the start)
+                      </li>
+                      <li>
+                        <code>oft4</code> (a 4-tear with clicks at all 4 tearing moments and a click at the end)
+                      </li>
+                      <li>
+                        <code>it4__f1</code> (a 4-tear with a click at the start whose elements are 1-click flares)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="container m-2">
+                  <h4><a id="dialectOrbitsButton" class="theory-headers" data-bs-toggle="collapse" href="#dialectOrbits"  aria-expanded="false" aria-controls="dialectOrbits">
+                    Dialect for Orbits
+                  </a></h4>
+                  <div class="collapse m-2" id="dialectOrbits">
+                    <p>
+                      <strong>Orbits</strong> are scratches that incorporate both a forward and backward movement, or vice versa, of the record in sequence. At the first level, you can always construct orbits like so: <code>[SCRATCH] + -[SCRATCH]</code>, where <code>[SCRATCH]</code> in both cases stands for any element or tear scratch. But if you want to specify a particular length-ratio, things get messier. For example, to get a ratio of "two-to-three", you need to write something like <code>([SCRATCH] / 2 + -[SCRATCH] / 3) / 1</code>.
+                    </p>
+                    <p>
+                      At the second level, <strong>a more convenient way</strong> to formulate orbits is to use the <strong>grammar</strong> <code>[SCRATCH]_[SCRATCH][_RATIO]*</code>, whereby
+                    </p>
+                    <ul>
+                      <li><code>[SCRATCH]</code> is obligatory in both cases and stands for <strong>any element or tear scratch</strong> (the second one automatically being the backward scratch).</li>
+                      <li><code>_</code> is obligatory and simply stands for "orbit".</li>
+                      <li><code>[_RATIO]*</code> is optional and stands for a specific <strong>length-ratio</strong>, such as <code>_23</code>, meaning "two-to-three", i.e. that the forward scratch gets 2/5<i>th</i> of the total length while the backward scratch gets 3/5<i>th</i> of the total length. If no length-ratio is specified, a ratio of "one-to-one" is automatically assumed.</li>
+                    </ul>
+                    <p>
+                      <strong>Examples</strong> for orbits following this grammar are:
+                    </p>
+                    <ul>
+                      <li>
+                        <code>flare1_flare2</code> (a "1-click-flare-vs-2-click-flare" orbit aka "rawhippopotamus" with a non-specified "one-to-one" length-ratio.)
+                      </li>
+                      <li>
+                        <code>f1_f2_23</code> (a "1-click-flare-vs-2-click-flare" orbit aka "hippopotamus" with a specified "two-to-three" length-ratio.)
+                      </li>
+                      <li>
+                        <code>it4_o</code> (a "4-tear-vs-out" orbit)
+                      </li>
+                    </ul>
+                    <p>
+                      <strong>Please note</strong>:
+                    </p>
+                    <ul>
+                      <li>
+                        You can use both <strong>elements</strong> and <strong>tears</strong> as scratches.
+                      </li>
+                      <li>
+                        The grammar allows you to compose <strong>unloopable orbits</strong>, like <code>b_o</code>, whose start and end connectors do not match, so that the orbit could not be looped in reality.
+                      </li>
+                      <li>
+                        The grammar (currently) does not prohibit you from composing <strong>"impossible" orbits</strong>, like <code>b_i</code>, whose direct connectors don't match. In the example, a baby-scratch <u>without</u> a click at the end meets an in-scratch <u>with</u> a click at the start. 
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Theory Tab -->
+        <div class="tab-pane fade" id="theory-tab-pane" role="tabpanel" aria-labelledby="theory-tab" tabindex="0">
+          <div class="container mt-3 fw-light">
+            <p class="fs-4">
+              ScratchBook builds on two theoretical pillars 
+            </p>
+            <ol>
+              <li>An existing system of <strong>scratch notation</strong> (TTM)</li>
+              <li>A new and unique theory of <strong>scratch elements</strong></li>
+            </ol>
+            
+            <h4><a id="notationButton" class="theory-headers" data-bs-toggle="collapse" href="#notation"  aria-expanded="false" aria-controls="notation">
+              Scratch Notation
+            </a></h4>
+            <div class="collapse" id="notation">
+              <p> 
+                The <a href="https://en.wikipedia.org/wiki/Turntablist_transcription_methodology" target='_blank'>turntablist transcription methodology (TTM)</a> was created and published by John Carluccio, Ithan Imboden, and Raymond Pirtle in the late 1990s. It is a system for transcribing any scratch as the graph of a function of time, on the x-axis, against the roation of the record or against the duration of the sample, on the y-axis.<sup><a href="#footnote-1"><span style="font-size: 9px;">[1]</span></a></sup>
+              </p>
+              <ul>
+                <li>When <strong>the curve moves up</strong> this means that the record moves forward. When <strong>the curve moves down</strong> the record moves down.</li>
+                <li>The <strong>steepness of the curve</strong> at any point signifies the speed of the record, which usually corresponds to the pitch of the sample (except when pitch control technologies are used). The faster the sample is played, the steeper the curve and vice versa.</li>
+                <li>When <strong>the curve forms a horizontal line</strong>, even for a very short period of time, this indicates that the record is held still and makes no sound. This occurs, for example, during a tear scratch and at the turning point of any orbit scratch.</li>
+                <li><strong>Circles on top of the curve</strong> signify "clicks", i.e. moments when the cross-fader is closed and re-opened in as little time as possible, causing small breaks in the sound.</li>
+              </ul>
+              <p> 
+                According to the original <a href="https://www.ttm-dj.com/TTMv1.1_Eng.pdf" target='_blank'>TTM-booklet</a>, TTM is emphatically <em>"an open source effort...Fight it, defend it, tweak it, trash it - all will assist its evolution"</em> (p.10). In this spirit, <strong>ScratchBook modifies the original TTM</strong> in the following way: 
+              </p>
+              <ul>
+                <li><strong>The color white</strong> generally indicates that the <strong>fader is closed</strong>.</li>
+                <li>Consequently, <strong>white circles</strong> (<u>not black ones</u>) are used to represent <strong>regular fader clicks</strong>.</li>
+                <li><strong>When the cross fader is closed for a longer time period</strong>, e.g. when the record is brought back during the second half of a stab scratch, this is indicated by a <strong>white curve</strong>.</li>
+                <li><strong>No "phantom clicks"</strong> are used to indicate moments when the record is held still.</li>
+              </ul>
+              <p class="footnote" id="footnote-1"><sup>[1]</sup> TTM has been fleshed out more fully in Raymond Pirtle's later work on the "Periodic Matrix of Scratches". There is also an alternative scratch notation system, which resembles the modern staff notation. See Alex Sonnenfeld's <a href="http://www.alexandersonnenfeld.com/fileadmin/user_upload/S-Notation/S-Notation-Paper_Tenor_2016.pdf" target='_blank'>S-Notation</a>.</p>
+            </div>
+            <h4><a id="elementsButton" class="theory-headers" data-bs-toggle="collapse" href="#elements"  aria-expanded="false" aria-controls="elements">
+              Scratch Elements
+            </a></h4>
+            <div class="collapse" id="elements">
+              <p> 
+                Under the hood, <strong>ScratchBook takes a new and unique approach to conceptualizing scratches</strong>. Any scratch curve and associated audio file is generated from a sequence of distinct building blocks, called <strong>elements</strong>, each of which exhibits a unique combination of <strong>"subatomic features"</strong>.
+              </p>
+              <p>
+                ScratchBook's elements fall into <strong>eleven classes</strong> and <strong>two groups</strong>:
+              </p>
+              <div class="container elements-container">
+                <div class="row elements-group">
+                  <p class="elements-heading">Group 1</p>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/b/preview" alt="Babies"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Babies</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/i/preview" alt="Ins"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Ins</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/o/preview" alt="Outs"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Outs</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/d/preview" alt="Dices"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Dices</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container elements-container">
+                <div class="row justify-content-center">
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/f1/preview" alt="Flares"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Flares</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/if1/preview" alt="iFlares"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">iFlares</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/of1/preview" alt="oFlares"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">oFlares</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/tr2/preview" alt="dFlares (Transformers)"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">dFlares (Transformers)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container elements-container" style="margin-top: 10px;">
+                <div class="row elements-group">
+                  <p class="elements-heading">Group 2</p>
+                </div>
+                <div class="row">
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/g/preview" alt="Ghost"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Ghost</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/h/preview" alt="Hold"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Hold</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/gh/preview" alt="Ghost-Hold"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">Ghost-Hold</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <p>
+                <strong>Group 1</strong> comprises 8 classes of <strong>elements that make a sound</strong>. These classes relate to each other in the following ways:
+              </p>
+              <ul>
+                <li>
+                  <strong>Babies and Flares</strong> both have no clicks at their start and end points, but they differ in that only the Flares have clicks in between their start and end points (only one such click is shown here, but scratches of all Flare classes can have up to 9 clicks).
+                </li>
+                <li>
+                  <strong>Ins and iFlares</strong> both have a click at their start points and no click at their end points, but they differ in that only the iFlares have clicks in between their start and end points.
+                </li>
+                <li>
+                  <strong>Outs and oFlares</strong> both have a click at their end points and no click at their start points (opposite of Ins/iFlares!), but they differ in that only the iFlares have clicks in between their start and end points.
+                </li>
+                <li>
+                  <strong>Dices and dFlares </strong> both have clicks at their start AND end points, but they differ in that only the dFlares have clicks in between their start and end points.
+                </li>
+                <li>
+                  Since <strong>dFlares are commonly referred to as Transformers</strong>, Scratchbook permits both names, <strong>but the grammar is slightly different</strong>. The equivalent of <code>df2</code> is <code>tr3</code> (<u>not</u> <code>t2</code>), because the numbers refer to different quantities. <strong>In all flare scratches</strong>, including dFlares, the number refers to <strong>the number of clicks</strong> while <strong>in transformers</strong> the number refers to <strong>the number of sounds</strong>. 
+                </li>
+              </ul>
+              <p>
+                <strong>Group 2</strong> comprises 3 <strong>elements that do <u>not</u> make a sound</strong>:
+              </p>
+              <ul>
+                <li>
+                  The <strong>Ghost</strong> is used mainly in the <code>stab</code> scratch, where it signifies the silent backward movement of the record after the fader has been closed.
+                </li>
+                <li>
+                  The <strong>Hold</strong> is used whenever the record is held still for a longer time period while the fader remains open. See for example the <code>slicecombo1</code>.
+                </li>
+                <li>
+                  The <strong>Ghost-Hold</strong> is used whenever the record is held still for a longer time period while the fader is closed.
+                </li>
+              </ul>
+              <p>
+                The <strong>total number of elements within and across all classes</strong> depends on the number of subatomic features and the rules of their combination. ScratchBook considers <strong>five classes of features</strong>:
+              </p>
+              <ul>
+                <li><strong>Curve shapes</strong> (horizontal, sine, exponential, logarithmic)</li>
+                <li><strong>Curve colors</strong> (black, white)</li>
+                <li><strong>io-Clicks</strong> (in/out-clicks), i.e. clicks at the start and/or at the end of a of a scratch (none, start, end, start+end).</li>
+                <li><strong>f-Clicks</strong> (flare-clicks), i.e. clicks somewhere in the middle of a scratch (0-9 clicks, but limited to 0-3 clicks in the element collection)</li>
+                <li><strong>Click patterns</strong> (normal, diminished, augmented, stretched, squeezed)</li>
+              </ul>
+              <p>
+                <strong>Not all of these features should be combined with each other</strong>. For example, since white curves always represents silent record movement, they should  never have any clicks at all, and, to keep things simple, when they are not horizontal (1 Ghost-Hold), they should always be sine (1 Ghost). Also, click patterns only ever make sense when a scratch has at least one f-click, whereby stretched and squeezed patterns only make sense when at least two f-clicks are given.
+              </p>
+              <p>The following example of a 3-click flare scratch gives an overview over <strong>the five available click patterns</strong>:</p>
+              <div class="container">
+                <div class="row">
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/f3/preview" alt="normal"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">normal (<code>f3</code>)</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/f3A/preview" alt="Hold"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">augmented (<code>f3A</code>)</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/f3D/preview" alt="Ghost-Hold"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">diminished (<code>f3D</code>)</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/f3S/preview" alt="Ghost-Hold"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">stretched (<code>f3S</code>)</p>
+                    </div>
+                  </div>
+                  <div class="col centered">
+                    <div class="row">
+                      <span><img class="preview" src="/formulas/f3Q/preview" alt="Ghost-Hold"></span>
+                    </div>
+                    <div class="row">
+                      <p class="preview-title">squeezed (<code>f3Q</code>)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p>
+                The following table shows the <strong>distribution of subatomic features over ScratchBook's elements</strong>: 
+              </p>
+              <p class="centered">
+                <img 
+                src="/figures/classes"
+                  alt="classes of elements" 
+                  style="max-width: 60%">
+              </p>
+              <p>
+                In order to keep the size of ScratchBook's <strong>elements collection</strong> reasonably small, the number of f-clicks is limited to 3 there, resulting in a total of <strong>171 elements</strong>, computed by the following <strong>rules of combination</strong>:
+              </p>
+              <p class="centered">
+                <img 
+                  src="/figures/rules"
+                  alt="rules for combining elements" 
+                  style="max-width: 52%">
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- About Tab -->
+        <!-- <div class="tab-pane fade" id="about-tab-pane" role="tabpanel" aria-labelledby="about-tab" tabindex="0">
+          <div class="container mt-3 fw-light">
+            <p>About...</p>
+          </div>
+        </div> -->
+        <!-- Impressum Tab -->
+        <div class="tab-pane fade" id="impressum-tab-pane" role="tabpanel" aria-labelledby="impressum-tab" tabindex="0">
+          <div class="container m-3 fw-light" style="font-size: 12px;">
+            <br/>
+            <p><strong>Angaben gemäß § 5 TMG, sowie der inhaltlich Verantwortliche gemäß § 18 Abs. 2 MStV:</strong></p>
+            <p>
+                Arno Simons <br> 
+                Deidesheimer Str. 2<br> 
+                14197 Berlin <br> 
+            </p>
+            <p>
+                Kontakt: <br>
+                E-Mail: <a href='mailto:arno.simons@gmail.com'>arno.simons@gmail.com</a></p>
+            </p>
+            <br/>
+            <p>
+              <strong>HAFTUNGSAUSSCHLUSS</strong>
+              <br><br>            
+              <strong>Haftung für Inhalte</strong>
+              <br><br>
+              Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann der Seitenbetreiber jedoch keine Gewähr übernehmen. Als Diensteanbieter ist der Seitenbetreiber gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG ist der Seitenbetreiber als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen wird der Seitenbetreiber diese Inhalte umgehend entfernen.
+              <br><br>
+              <strong>Haftung für Links</strong>
+              <br><br>
+              Diese Seiten enthalten Links zu externen Webseiten Dritter, auf deren Inhalte der Seitenbetreiber keinen Einfluss hat. Deshalb kann der Seitenbetreiber für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen wird der Seitenbetreiber derartige Links umgehend entfernen.
+              <br><br>
+              <strong>Urheberrecht</strong>
+              <br><br>
+              Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bittet der Seitenbetreiber um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen wird der Seitenbetreiber derartige Inhalte umgehend entfernen.
+              <br><br>
+              <strong>Datenschutz</strong>
+              <br><br>
+              Die Nutzung dieser Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf diesen Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. <br>
+              Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. 
+              <br>
+              Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Der Betreiber der Seiten behält sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.<br>
+              <br><br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="bg-dark text-center text-white">
+    <!-- Grid container -->
+    <div class="container p-4">
+      <section class="mb-4 fw-light">
+        <p class="fs-6 fw-normal">About</p>
+        <p>ScratchBook is an educational and non-commercial project. It's goals are 1) to curate a comprehensive library of scratches, 2) to provide a language for formulating all conceivable scratches, and 3) to offer automatic tools for the audio-visual representation of scratches, free to use for everyone under the <a class="dark-link" href="https://www.gnu.org/licenses/gpl-3.0.en.html" target='_blank'>GPL-3.0 license</a>.</p>
+        <p>ScratchBook rests on a new and unique theory of scratch elements. It also uses a slightly modified version of the <a class="dark-link" href="https://en.wikipedia.org/wiki/Turntablist_transcription_methodology" target='_blank'>turntablist transcription methodology (TTM)</a>, which was created and <a class="dark-link" href="https://www.ttm-dj.com/TTMv1.1_Eng.pdf" target='_blank'>published</a> by John Carluccio, Ithan Imboden, and Raymond Pirtle in the late 1990s. I am deeply indebted to their work.</p>
+        <p>The <a class="dark-link" href="https://github.com/arnosimons/scratchbook" target='_blank'>underlying code</a> is free freely available and reusable under the <a class="dark-link" href="https://www.gnu.org/licenses/gpl-3.0.en.html" target='_blank'>GPL-3.0 license</a>.</p>
+        <p> © 2022 by Arno Simons, a Berlin-based <a class="dark-link" href="https://www.instagram.com/dj_hdrs/" target='_blank'>turntablist</a> and <a class="dark-link" href="https://scholar.google.de/citations?user=NhCwiDwAAAAJ&hl=en" target='_blank'>researcher</a>.</p>
+      </section>
+    </div>
+  <br/>
+  </footer>
+</html>

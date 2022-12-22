@@ -1,0 +1,1 @@
+FORMULA_SYMBOLS = "+-~*/.()[:]%"
