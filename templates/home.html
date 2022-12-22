@@ -19,21 +19,19 @@
     <!-- Ajax -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css">
     <!-- Custom stuff -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/scratchbook.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scratchbook.css') }}">
     <script src="{{url_for('static', filename='js/scratchbook.js')}}"></script>
     <title>ScratchBook</title>
   </head>
-  <body> 
+  <body>
     <header class="" style="background-color:rgb(33, 37, 41);box-shadow:0px 4px 3px -1px var(--grey-dark)">
       <div class="container-md p-2 mb-3 bg-dark text-white">
-        <h1>ScratchBook &#128221;&#127926;</h1>
+        <h1><a class="dark-link" href="https://scratchbook.pythonanywhere.com/">ScratchBook &#128221;&#127926;</a></h1>
         <p class="fst-italic" style="color: white; font-size: 16px;">Nerd heaven for turntablists!</p>
         <!-- <p style="color: white; font-size: 16px;">Browse, Compose, Visualize, Listen</p> -->
       </div>
     </header>
     <div class="container-md">
-      <!-- <h1>ScratchBook</h1>
-      <div id="TEST"></div> -->
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <button name="home_button" class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
@@ -54,18 +52,23 @@
           <nav class="home-formula navbar md-white mt-3 mb-3">
             <form class="home-formula__form container-fluid">
               <div class="input-group">
-                <button class="btn btn-outline-secondary" type="submit">&#128298;</button>
-                <input 
-                  type="text" 
-                  class="home-formula__input form-control" 
+                <button
+                    id="formulaButton"
+                    class="home-formula__enter-button btn btn-outline-secondary"
+                    type="submit">&#128298;
+                </button>
+                <input
+                  type="text"
+                  class="home-formula__input form-control"
                   id="formulaInput"
                   value=""
-                  placeholder="Write a scratch formula and press enter..">
-                <button 
-                  id="formulaButton" 
-                  class="home-formula__button btn btn-outline-secondary text-dark" 
+                  placeholder="Enter formula or click scratch in library..">
+                <button
+                  id="surpriseButton"
+                  class="home-formula__surprise-button btn btn-outline-secondary text-dark"
+                  style="background-color: var(--blue-light)"
                   type="submit">
-                    Enter
+                    Surprise!
                 </button>
               </div>
             </form>
@@ -74,55 +77,106 @@
             <div class="home-scratch__message"></div>
             <div class="home-scratch__ttm row-sm"></div>
             <div class="home-scratch__audio row-sm"></div>
-            <div class="home-scratch__info row justify-content-center mt-3"></div>            
+            <div class="home-scratch__info row justify-content-center mt-3"></div>
           </div>
           <!-- Library -->
           <div class="container">
             <div class="card border mb-3" style="min-width: 9rem;">
               <div class="card-header">
-                <a 
-                  class="btn cardHeader" 
-                  data-bs-toggle="collapse" 
+                <a
+                  class="btn fw-semibold"
+                  data-bs-toggle="collapse"
                   aria-expanded="false"
-                  href="#libraryButton" 
+                  href="#libraryButton"
                   style="width: 100%">
                   &#128218; Library of Scratches
                 </a>
               </div>
               <div id="libraryButton" class="collapse show">
                 <div class="card-body">
-                  <div id="PRINT"></div>
+
+
                   <div class="container">
-                    <div class="row mt-2">
-                      <div class="col-lg-1">
-                        Types:
-                      </div>
-                      <div class="col-10">
-                        <div class="form-check form-switch form-check-inline">
-                          <input class="form-check-input" type="checkbox" role="switch" id="CORE" checked>
-                          <label class="form-check-label" for="CORE">Core</label>
+
+                    <div class="card border mb-3" style="min-width: 9rem;">
+                        <div class="card-header">
+                            <a
+                              class="btn fw-semibold"
+                              data-bs-toggle="collapse"
+                              aria-expanded="false"
+                              href="#collectionsButton"
+                              style="width: 100%">
+                              Show Collections
+                            </a>
                         </div>
-                        <div class="form-check form-switch form-check-inline">
-                          <input class="form-check-input" type="checkbox" role="switch" id="ELEMENTS">
-                          <label class="form-check-label" for="ELEMENTS">Elements</label>
+                        <div id="collectionsButton" class="collapse">
+                            <div class="card-body">
+                                <div class="row mt-2">
+                                  <div class="col-lg-1">
+                                    Types:
+                                  </div>
+                                  <div class="col-10">
+                                    <div class="form-check form-switch form-check-inline">
+                                      <input class="form-check-input" type="checkbox" role="switch" id="CORE" checked>
+                                      <label class="form-check-label" for="CORE">Core</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                      <input class="form-check-input" type="checkbox" role="switch" id="ELEMENTS">
+                                      <label class="form-check-label" for="ELEMENTS">Elements</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                      <input class="form-check-input" type="checkbox" role="switch" id="TEARS">
+                                      <label class="form-check-label" for="TEARS">Tears</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                      <input class="form-check-input" type="checkbox" role="switch" id="ORBITS">
+                                      <label class="form-check-label" for="ORBITS">Orbits</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                      <input class="form-check-input" type="checkbox" role="switch" id="COMBOS">
+                                      <label class="form-check-label" for="COMBOS">Combos</label>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check form-switch form-check-inline">
-                          <input class="form-check-input" type="checkbox" role="switch" id="TEARS">
-                          <label class="form-check-label" for="TEARS">Tears</label>
-                        </div>
-                        <div class="form-check form-switch form-check-inline">
-                          <input class="form-check-input" type="checkbox" role="switch" id="ORBITS">
-                          <label class="form-check-label" for="ORBITS">Orbits</label>
-                        </div>
-                        <div class="form-check form-switch form-check-inline">
-                          <input class="form-check-input" type="checkbox" role="switch" id="COMBOS">
-                          <label class="form-check-label" for="COMBOS">Combos</label>
-                        </div>
-                      </div>
                     </div>
+
+
+                    <!--<div class="row mt-2">-->
+                    <!--  <div class="col-lg-1">-->
+                    <!--    Types:-->
+                    <!--  </div>-->
+                    <!--  <div class="col-10">-->
+                    <!--    <div class="form-check form-switch form-check-inline">-->
+                    <!--      <input class="form-check-input" type="checkbox" role="switch" id="CORE" checked>-->
+                    <!--      <label class="form-check-label" for="CORE">Core</label>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-check form-switch form-check-inline">-->
+                    <!--      <input class="form-check-input" type="checkbox" role="switch" id="ELEMENTS">-->
+                    <!--      <label class="form-check-label" for="ELEMENTS">Elements</label>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-check form-switch form-check-inline">-->
+                    <!--      <input class="form-check-input" type="checkbox" role="switch" id="TEARS">-->
+                    <!--      <label class="form-check-label" for="TEARS">Tears</label>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-check form-switch form-check-inline">-->
+                    <!--      <input class="form-check-input" type="checkbox" role="switch" id="ORBITS">-->
+                    <!--      <label class="form-check-label" for="ORBITS">Orbits</label>-->
+                    <!--    </div>-->
+                    <!--    <div class="form-check form-switch form-check-inline">-->
+                    <!--      <input class="form-check-input" type="checkbox" role="switch" id="COMBOS">-->
+                    <!--      <label class="form-check-label" for="COMBOS">Combos</label>-->
+                    <!--    </div>-->
+                    <!--  </div>-->
+                    <!--</div>-->
+
+
                   </div>
+
+
                   <div class="container mt-2">
-                    <table id="library"></table>
+                    <table class="fw-light" id="library"></table>
                   </div>
                 </div>
               </div>
@@ -132,16 +186,16 @@
           <div class="container fw-light">
             <div class="card border mb-3" style="min-width: 9rem;">
               <div class="card-header">
-                <a 
-                  class="btn cardHeader" 
-                  data-bs-toggle="collapse" 
+                <a
+                  class="btn fw-semibold"
+                  data-bs-toggle="collapse"
                   aria-expanded="false"
-                  href="#explainer" 
+                  href="#explainerButton"
                   style="width: 100%">
-                  &#129514; Explainer: Scratch Formulas
+                  &#129514; Explainer: Formulas
                 </a>
               </div>
-              <div id="explainer" class="collapse">
+              <div id="explainerButton" class="collapse show">
                 <div class="card-body">
                   <p>
                     Think of ScratchBook's <strong>formulas</strong> as a special <strong>language</strong> that allows you to formulate <strong>all conceivable scratches</strong>.
@@ -153,18 +207,18 @@
                     Many, but not all, scratches have <strong>names</strong>. Browse the <strong>library of scratches</strong> above to see what names are available.
                     As you will see, some scratches have <strong>multiple names</strong>. For example, the 1-click-flare-orbit has four: <code>flareorbit1</code>, <code>flob1</code>, <code>f1o</code> as well as <code>f1_f1</code>. Pick the name that resonates best with you!
                   </p>
-                  <p> 
-                    The <strong>operators</strong> are special symbols that can be used to modify and combine names. 
-                    For example, the 1-click-flare-orbit can be repeated like so: <code>flob1 * 2</code>. Or it can be shortened like so: <code>flob1 / 0.5</code>. 
+                  <p>
+                    The <strong>operators</strong> are special symbols that can be used to modify and combine names.
+                    For example, the 1-click-flare-orbit can be repeated like so: <code>flob1 * 2</code>. Or it can be shortened like so: <code>flob1 / 0.5</code>.
                     See the <strong>Operators section</strong> below for more details.
                   </p>
-                  <p> 
+                  <p>
                     Note that ScratchBook's <strong>formulas work on two levels</strong>.
                     At the <strong>first level</strong>, you can combine <strong>names</strong> and <strong>operators</strong> into formulas like <code>autobahn + prizm + (slice / 0.25) * 4</code>.
                     At the <strong>second level</strong>, ScratchBook provides <strong>special dialects</strong> to define <strong>elements</strong>, <strong>tears</strong>, and <strong>orbits</strong>.
                     See the three <strong>Dialects sections</strong> below as well as the <strong>Theory tab</strong> on top for more details.
                   </p>
-                  
+
                 </div>
                 <div class="container m-2">
                   <h4><a id="operatorsButton" class="theory-headers" data-bs-toggle="collapse" href="#operators"  aria-expanded="false" aria-controls="operators">
@@ -185,7 +239,7 @@
                             <td>-</td>
                             <td>"Reverse" or "backwards" scratching (Flip a scratch on the y-axis)</td>
                             <td>-scratch</td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='-autobahn'; formulaButton.click();">
                               -autobahn
                             </code></td>
@@ -194,7 +248,7 @@
                             <td>~</td>
                             <td>"Mirror" scratching (Flip a scratch on the x-axis)</td>
                             <td>~scratch</td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='~autobahn'; formulaButton.click();">
                               ~autobahn
                             </code></td>
@@ -203,7 +257,7 @@
                             <td>*</td>
                             <td>Repeat a scratch <em>n</em> times (<em>n</em> must be an integer number)</td>
                             <td>scratch * <em>n</em></td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='chirp * 4'; formulaButton.click();">
                               chirp * 4
                             </code></td>
@@ -212,7 +266,7 @@
                             <td>+</td>
                             <td>Add scratches from left to right</td>
                             <td>scratch + scratch</td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='chirp + flob2 + stab'; formulaButton.click();">
                               chirp + flob2 + stab
                             </code></td>
@@ -221,7 +275,7 @@
                             <td>/</td>
                             <td>Set the length <em>n</em> of a scratch in 1/4 notes (aka beats)</td>
                             <td>scratch / <em>n</em></td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='baby / 2'; formulaButton.click();">
                               baby / 2
                             </code></td>
@@ -230,7 +284,7 @@
                             <td>//</td>
                             <td>Decide how much of the sample is used (<em>n</em> must be between 0 and 1)</td>
                             <td>scratch // <em>n</em></td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='swingflare // 0.2'; formulaButton.click();">
                               swingflare // 0.2
                             </code></td>
@@ -239,7 +293,7 @@
                             <td>**</td>
                             <td>Move a scratch or expression up on the Y-axis. Typically used in connection with the "//" Operator". Use brackets wisely! For example, "chirp // 0.5 ** 0.5" is not the same as "(chirp // 0.5) ** 0.5".</td>
                             <td>expression ** <em>n</em></td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='(chirp // 0.5) ** 0.5'; formulaButton.click();">
                               (chirp // 0.5) ** 0.5
                             </code></td>
@@ -248,7 +302,7 @@
                             <td>%</td>
                             <td>Shift the "phase" of a scratch by rotating its elements from right to left. (<em>n</em> must be an integer number)</td>
                             <td>scratch % <em>n</em></td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='prizm % 2'; formulaButton.click();">
                               prizm % 2
                             </code></td>
@@ -257,7 +311,7 @@
                             <td>[<em>n</em>]</td>
                             <td>Show the <em>n</em>-ths element of a composed scratch (<em>n</em> must be an integer number. <span style="color: var(--red)">&#9888;</span> Counting starts at 0 not at 1!)</td>
                             <td>scratch[<em>n</em>]</td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='autobahn[3]'; formulaButton.click();">
                               autobahn[3]
                             </code></td>
@@ -266,7 +320,7 @@
                             <td>[<em>n</em>:<em>m</em>]</td>
                             <td>Show all elements between the <em>n</em>-ths (included) and <em>m</em>-ths (excluded) element of a composed scratch (<em>n</em> and <em>m</em> must be integer numbers. <span style="color: var(--red)">&#9888;</span> Counting starts at 0 not at 1!)</td>
                             <td>scratch[<em>n</em>:<em>m</em>]</td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='autobahn[3:7]'; formulaButton.click();">
                               autobahn[3:7]
                             </code></td>
@@ -275,7 +329,7 @@
                             <td>(<em>expression</em>)</td>
                             <td>Use (nested) brackets to logically "shield off" expressions from each other. For example, "chirp / 1/3" is not the same as "chirp / (1/3)". Brackets are essential for many complex expressions.</td>
                             <td>(<em>expression</em>)</td>
-                            <td><code class="tooltip-code" 
+                            <td><code class="tooltip-code"
                               onclick="document.getElementById('formulaInput').value='(chirp // (1/3)) ** (2/3)'; formulaButton.click();">
                               (chirp // (1/3)) ** (2/3)
                             </code></td>
@@ -293,7 +347,7 @@
                       <strong>Elements</strong> are scratches that cannot be broken down into smaller scratches, only into their "subatomic features" (see the Theory section below). Their names obey the <strong>grammar</strong> <code>[BASE][N]*[CP]*[CRV]*</code>, whereby
                     </p>
                     <ul>
-                      <li><code>[BASE]</code> is obligatory and stands for one of the eleven <strong>base names</strong>: <code>baby, in, out, dice, flare, iflare, oflare, transformer, ghost, hold, ghosthold</code>. 
+                      <li><code>[BASE]</code> is obligatory and stands for one of the eleven <strong>base names</strong>: <code>baby, in, out, dice, flare, iflare, oflare, transformer, ghost, hold, ghosthold</code>.
                         <br/>&#128123; If you're lazy, like me, simply use <strong>abbreviations</strong>: <code>b, i, o, d, f, if, of, tr, g, h, gh</code>.</li>
                       <li><code>[N]*</code> is only possible but then also obligatory after the bases <code>f, if, of</code>, where it stands for the number of <strong>flare-clicks</strong>, as well as after the base <code>tr</code>, where it stands for the number of <strong>transformer sounds</strong>. Currently, all numbers between <code>1</code> and <code>9</code> are permitted.</li>
                       <li><code>[CP]*</code> is optional and stands for a non-standard <strong>click-pattern</strong> (<code>D, A, S</code> or <code>Q</code>) after any of the bases <code>f, if, of, tr</code>.</li>
@@ -325,12 +379,12 @@
                     </p>
                     <ul>
                       <li><code>[TBASE]</code> is optional and stands for one of the following <strong>tear-bases</strong>: <code>i, o, d, f, if, of, tr</code>. The <strong>purpose</strong> of the tear-base is to specify <strong>if and where clicks are added</strong> when the record is paused, i.e. <strong>during the tearing moments</strong>:
-                        <br/><code>i</code> = click at the start, 
-                        <br/><code>o</code> = click at the end, 
-                        <br/><code>d</code> = click at the start AND click at the end, 
-                        <br/><code>f</code> = clicks at every tearing moment, 
-                        <br/><code>if</code> = click at the start AND clicks at every tearing moment, 
-                        <br/><code>of</code> = clicks at every tearing moment AND click at the end, 
+                        <br/><code>i</code> = click at the start,
+                        <br/><code>o</code> = click at the end,
+                        <br/><code>d</code> = click at the start AND click at the end,
+                        <br/><code>f</code> = clicks at every tearing moment,
+                        <br/><code>if</code> = click at the start AND clicks at every tearing moment,
+                        <br/><code>of</code> = clicks at every tearing moment AND click at the end,
                         <br/><code>tr</code> = click at the start AND clicks at every tearing moment AND click at the end.</li>
                       <li><code>tear</code> is obligatory but <strong>can be abbreviated</strong> as <code>t</code>.</li>
                       <li><code>[N]</code> is obligatory and stands for the number of pauses or <strong>tearing moments</strong>, i.e. how often the record is held still during a tear scratch.</li>
@@ -397,12 +451,12 @@
                         The grammar allows you to compose <strong>unloopable orbits</strong>, like <code>b_o</code>, whose start and end connectors do not match, so that the orbit could not be looped in reality.
                       </li>
                       <li>
-                        The grammar (currently) does not prohibit you from composing <strong>"impossible" orbits</strong>, like <code>b_i</code>, whose direct connectors don't match. In the example, a baby-scratch <u>without</u> a click at the end meets an in-scratch <u>with</u> a click at the start. 
+                        The grammar (currently) does not prohibit you from composing <strong>"impossible" orbits</strong>, like <code>b_i</code>, whose direct connectors don't match. In the example, a baby-scratch <u>without</u> a click at the end meets an in-scratch <u>with</u> a click at the start.
                       </li>
                     </ul>
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -411,18 +465,18 @@
         <div class="tab-pane fade" id="theory-tab-pane" role="tabpanel" aria-labelledby="theory-tab" tabindex="0">
           <div class="container mt-3 fw-light">
             <p class="fs-4">
-              ScratchBook builds on two theoretical pillars 
+              ScratchBook builds on two theoretical pillars
             </p>
             <ol>
               <li>An existing system of <strong>scratch notation</strong> (TTM)</li>
               <li>A new and unique theory of <strong>scratch elements</strong></li>
             </ol>
-            
+
             <h4><a id="notationButton" class="theory-headers" data-bs-toggle="collapse" href="#notation"  aria-expanded="false" aria-controls="notation">
               Scratch Notation
             </a></h4>
             <div class="collapse" id="notation">
-              <p> 
+              <p>
                 The <a href="https://en.wikipedia.org/wiki/Turntablist_transcription_methodology" target='_blank'>turntablist transcription methodology (TTM)</a> was created and published by John Carluccio, Ithan Imboden, and Raymond Pirtle in the late 1990s. It is a system for transcribing any scratch as the graph of a function of time, on the x-axis, against the roation of the record or against the duration of the sample, on the y-axis.<sup><a href="#footnote-1"><span style="font-size: 9px;">[1]</span></a></sup>
               </p>
               <ul>
@@ -431,8 +485,8 @@
                 <li>When <strong>the curve forms a horizontal line</strong>, even for a very short period of time, this indicates that the record is held still and makes no sound. This occurs, for example, during a tear scratch and at the turning point of any orbit scratch.</li>
                 <li><strong>Circles on top of the curve</strong> signify "clicks", i.e. moments when the cross-fader is closed and re-opened in as little time as possible, causing small breaks in the sound.</li>
               </ul>
-              <p> 
-                According to the original <a href="https://www.ttm-dj.com/TTMv1.1_Eng.pdf" target='_blank'>TTM-booklet</a>, TTM is emphatically <em>"an open source effort...Fight it, defend it, tweak it, trash it - all will assist its evolution"</em> (p.10). In this spirit, <strong>ScratchBook modifies the original TTM</strong> in the following way: 
+              <p>
+                According to the original <a href="https://www.ttm-dj.com/TTMv1.1_Eng.pdf" target='_blank'>TTM-booklet</a>, TTM is emphatically <em>"an open source effort...Fight it, defend it, tweak it, trash it - all will assist its evolution"</em> (p.10). In this spirit, <strong>ScratchBook modifies the original TTM</strong> in the following way:
               </p>
               <ul>
                 <li><strong>The color white</strong> generally indicates that the <strong>fader is closed</strong>.</li>
@@ -446,7 +500,7 @@
               Scratch Elements
             </a></h4>
             <div class="collapse" id="elements">
-              <p> 
+              <p>
                 Under the hood, <strong>ScratchBook takes a new and unique approach to conceptualizing scratches</strong>. Any scratch curve and associated audio file is generated from a sequence of distinct building blocks, called <strong>elements</strong>, each of which exhibits a unique combination of <strong>"subatomic features"</strong>.
               </p>
               <p>
@@ -459,7 +513,7 @@
                 <div class="row justify-content-center">
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/b/preview" alt="Babies"></span>
+                      <span><img class="preview rounded" src="/formulas/b/preview" alt="Babies"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Babies</p>
@@ -467,7 +521,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/i/preview" alt="Ins"></span>
+                      <span><img class="preview rounded" src="/formulas/i/preview" alt="Ins"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Ins</p>
@@ -475,7 +529,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/o/preview" alt="Outs"></span>
+                      <span><img class="preview rounded" src="/formulas/o/preview" alt="Outs"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Outs</p>
@@ -483,7 +537,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/d/preview" alt="Dices"></span>
+                      <span><img class="preview rounded" src="/formulas/d/preview" alt="Dices"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Dices</p>
@@ -495,7 +549,7 @@
                 <div class="row justify-content-center">
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/f1/preview" alt="Flares"></span>
+                      <span><img class="preview rounded" src="/formulas/f1/preview" alt="Flares"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Flares</p>
@@ -511,7 +565,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/of1/preview" alt="oFlares"></span>
+                      <span><img class="preview rounded" src="/formulas/of1/preview" alt="oFlares"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">oFlares</p>
@@ -519,7 +573,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/tr2/preview" alt="dFlares (Transformers)"></span>
+                      <span><img class="preview rounded" src="/formulas/tr2/preview" alt="dFlares (Transformers)"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">dFlares (Transformers)</p>
@@ -534,7 +588,7 @@
                 <div class="row">
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/g/preview" alt="Ghost"></span>
+                      <span><img class="preview rounded" src="/formulas/g/preview" alt="Ghost"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Ghost</p>
@@ -542,7 +596,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/h/preview" alt="Hold"></span>
+                      <span><img class="preview rounded" src="/formulas/h/preview" alt="Hold"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Hold</p>
@@ -550,7 +604,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/gh/preview" alt="Ghost-Hold"></span>
+                      <span><img class="preview rounded" src="/formulas/gh/preview" alt="Ghost-Hold"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">Ghost-Hold</p>
@@ -576,7 +630,7 @@
                   <strong>Dices and dFlares </strong> both have clicks at their start AND end points, but they differ in that only the dFlares have clicks in between their start and end points.
                 </li>
                 <li>
-                  Since <strong>dFlares are commonly referred to as Transformers</strong>, Scratchbook permits both names, <strong>but the grammar is slightly different</strong>. The equivalent of <code>df2</code> is <code>tr3</code> (<u>not</u> <code>t2</code>), because the numbers refer to different quantities. <strong>In all flare scratches</strong>, including dFlares, the number refers to <strong>the number of clicks</strong> while <strong>in transformers</strong> the number refers to <strong>the number of sounds</strong>. 
+                  Since <strong>dFlares are commonly referred to as Transformers</strong>, Scratchbook permits both names, <strong>but the grammar is slightly different</strong>. The equivalent of <code>df2</code> is <code>tr3</code> (<u>not</u> <code>t2</code>), because the numbers refer to different quantities. <strong>In all flare scratches</strong>, including dFlares, the number refers to <strong>the number of clicks</strong> while <strong>in transformers</strong> the number refers to <strong>the number of sounds</strong>.
                 </li>
               </ul>
               <p>
@@ -611,7 +665,7 @@
                 <div class="row">
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/f3/preview" alt="normal"></span>
+                      <span><img class="preview rounded" src="/formulas/f3/preview" alt="normal"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">normal (<code>f3</code>)</p>
@@ -619,7 +673,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/f3A/preview" alt="Hold"></span>
+                      <span><img class="preview rounded" src="/formulas/f3A/preview" alt="Hold"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">augmented (<code>f3A</code>)</p>
@@ -627,7 +681,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/f3D/preview" alt="Ghost-Hold"></span>
+                      <span><img class="preview rounded" src="/formulas/f3D/preview" alt="Ghost-Hold"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">diminished (<code>f3D</code>)</p>
@@ -635,7 +689,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/f3S/preview" alt="Ghost-Hold"></span>
+                      <span><img class="preview rounded" src="/formulas/f3S/preview" alt="Ghost-Hold"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">stretched (<code>f3S</code>)</p>
@@ -643,7 +697,7 @@
                   </div>
                   <div class="col centered">
                     <div class="row">
-                      <span><img class="preview" src="/formulas/f3Q/preview" alt="Ghost-Hold"></span>
+                      <span><img class="preview rounded" src="/formulas/f3Q/preview" alt="Ghost-Hold"></span>
                     </div>
                     <div class="row">
                       <p class="preview-title">squeezed (<code>f3Q</code>)</p>
@@ -652,21 +706,21 @@
                 </div>
               </div>
               <p>
-                The following table shows the <strong>distribution of subatomic features over ScratchBook's elements</strong>: 
+                The following table shows the <strong>distribution of subatomic features over ScratchBook's elements</strong>:
               </p>
               <p class="centered">
-                <img 
+                <img
                 src="/figures/classes"
-                  alt="classes of elements" 
+                  alt="classes of elements"
                   style="max-width: 60%">
               </p>
               <p>
                 In order to keep the size of ScratchBook's <strong>elements collection</strong> reasonably small, the number of f-clicks is limited to 3 there, resulting in a total of <strong>171 elements</strong>, computed by the following <strong>rules of combination</strong>:
               </p>
               <p class="centered">
-                <img 
+                <img
                   src="/figures/rules"
-                  alt="rules for combining elements" 
+                  alt="rules for combining elements"
                   style="max-width: 52%">
               </p>
             </div>
@@ -684,9 +738,9 @@
             <br/>
             <p><strong>Angaben gemäß § 5 TMG, sowie der inhaltlich Verantwortliche gemäß § 18 Abs. 2 MStV:</strong></p>
             <p>
-                Arno Simons <br> 
-                Deidesheimer Str. 2<br> 
-                14197 Berlin <br> 
+                Arno Simons <br>
+                Deidesheimer Str. 2<br>
+                14197 Berlin <br>
             </p>
             <p>
                 Kontakt: <br>
@@ -695,7 +749,7 @@
             <br/>
             <p>
               <strong>HAFTUNGSAUSSCHLUSS</strong>
-              <br><br>            
+              <br><br>
               <strong>Haftung für Inhalte</strong>
               <br><br>
               Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann der Seitenbetreiber jedoch keine Gewähr übernehmen. Als Diensteanbieter ist der Seitenbetreiber gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG ist der Seitenbetreiber als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen wird der Seitenbetreiber diese Inhalte umgehend entfernen.
@@ -711,7 +765,7 @@
               <strong>Datenschutz</strong>
               <br><br>
               Die Nutzung dieser Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf diesen Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. <br>
-              Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. 
+              Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.
               <br>
               Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Der Betreiber der Seiten behält sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.<br>
               <br><br>
