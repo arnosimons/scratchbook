@@ -7,7 +7,6 @@ $(document).ready(function () {
 
   let formulaInput = document.getElementById("formulaInput");
   let formulaButton = document.getElementById("formulaButton");
-//   let surpriseButton = document.getElementById("surpriseButton");
 
   let tooltipMessage = "Click to audio-visualize!"
 
@@ -102,7 +101,7 @@ $(document).ready(function () {
           // create TTM element
           $(".home-scratch__ttm").append(`
             <div class="row">
-              <picture>
+              <picture id="">
                 <source
                   srcset="/formulas/${processedFormula}/scratchbook_ttm"
                   type="image/svg+xml">
@@ -252,7 +251,11 @@ $(document).ready(function () {
       }
     })
   });
+  
+  formulaInput.setSelectionRange(formulaInput.value.length, formulaInput.value.length);
   formulaInput.focus();
+  formulaButton.click()
+  
 
   // Library
   ////////////////////////////////////////////////////////////////////////////////////
@@ -290,18 +293,6 @@ $(document).ready(function () {
         tr.find("td:eq(3)").attr('title', tooltipMessage);
         tr.find("td:eq(4)").attr('title', tooltipMessage);
         tr.find("td:eq(5)").attr('title', tooltipMessage);
-        // td0 = tr.find("td:eq(0)");
-        // td0.attr('title', tooltipMessage);
-        // td1 = tr.find("td:eq(1)");
-        // td1.attr('title', tooltipMessage);
-        // td2 = tr.find("td:eq(2)");
-        // td2.attr('title', tooltipMessage);
-        // td3 = tr.find("td:eq(3)");
-        // td3.attr('title', tooltipMessage);
-        // td4 = tr.find("td:eq(4)");
-        // td4.attr('title', tooltipMessage);
-        // td5 = tr.find("td:eq(5)");
-        // td5.attr('title', tooltipMessage);
       });
       /* Style header tooltips */
       $('#library [title]').tooltip({
