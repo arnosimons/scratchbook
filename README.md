@@ -1,2 +1,2 @@
-# [ScratchBook &#128221;&#127926;](https://scratchbook.pythonanywhere.com/)
+# [ScratchBook &#128221;&#127926;](https://www.scratchbook.app/)
 *Nerd heaven for turntablists!*
